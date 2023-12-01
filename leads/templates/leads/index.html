@@ -6,6 +6,11 @@
     <title>Learning DJANGO</title>
   </head>
   <body>
-    Hello, World!
+    Hello, world
+    <ul>
+    {% for lead in leads %}
+        <li>{{lead.first_name}}</li>
+    {% endfor %}
+    </ul>
   </body>
 </html>
