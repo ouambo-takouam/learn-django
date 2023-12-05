@@ -1,4 +1,5 @@
 from django.core.mail import send_mail
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView
 from django.views.generic.base import TemplateView
@@ -19,13 +20,13 @@ class RegisterView(CreateView):
 class LandingPageView(TemplateView):
     template_name = 'leads/landing.html'
 
-class LeadListView(ListView):
+class LeadListView(LoginRequiredMixin,ListView):
     model = Lead
 
-class LeadDetailView(DetailView):
+class LeadDetailView(LoginRequiredMixin, DetailView):
     model = Lead
 
-class LeadCreateView(CreateView):
+class LeadCreateView(LoginRequiredMixin, CreateView):
     model = Lead
     fields = ["first_name", "last_name", "age", "agent"]
 
@@ -43,7 +44,7 @@ class LeadCreateView(CreateView):
 
         return super(LeadCreateView, self).form_valid(form)
 
-class LeadUpdateView(UpdateView):
+class LeadUpdateView(LoginRequiredMixin, UpdateView):
     model = Lead
     fields = ["first_name", "last_name", "age", "agent"]
     template_name_suffix = '_update_form'
@@ -51,7 +52,7 @@ class LeadUpdateView(UpdateView):
     def get_success_url(self):
         return reverse('leads:lead_list')
 
-class LeadDeleteView(DeleteView):
+class LeadDeleteView(LoginRequiredMixin, DeleteView):
     model = Lead
     success_url = reverse_lazy("leads:lead_list")
 
