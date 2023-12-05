@@ -1,0 +1,12 @@
+{% extends "leads/base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div>
+    <h1>Logged out</h1>
+    <p>Thanks for spending some quality time with the web site today.</p>
+
+    <a href="{% url 'login' %}">Log in again</a>
+</div>
+{% endblock %}

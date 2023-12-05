@@ -1,6 +1,24 @@
-from django import forms
+from django.forms import ModelForm
+from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import UserCreationForm, UsernameField
 
-class LeadForm(forms.Form):
-    first_name = forms.CharField(label="First Name", max_length=20)
-    last_name = forms.CharField(label="Last Name", max_length=20)
-    age = forms.IntegerField(min_value=0)
+from .models import User, Lead
+
+User = get_user_model()
+
+class CustomUserCreationForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ("username",)
+        field_classes = {"username": UsernameField}
+
+
+class LeadForm(ModelForm):
+    class Meta:
+        model = Lead
+        fields = (
+            'first_name',
+            'last_name',
+            'age',
+            'agent'
+        )
